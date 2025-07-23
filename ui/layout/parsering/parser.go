@@ -1,21 +1,17 @@
-package main
+package parser
 
 import (
 	"fmt"
 	"strings"
 
 	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 
 	"github.com/ryo-del/devops-toolkit/internal/parser"
 )
 
-func main() {
-	a := app.New()
-	myWindow := a.NewWindow("Log Parser")
-	myWindow.Resize(fyne.NewSize(800, 600))
+func NewParserTab() fyne.CanvasObject {
 
 	infolabel := widget.NewLabel("Enter log file path:")
 	entry := widget.NewEntry()
@@ -42,13 +38,12 @@ func main() {
 		output.SetText(sb.String())
 	})
 
-	myWindow.SetContent(container.NewVBox(
+	return container.NewVBox(
 		infolabel,
 		entry,
 		parseBtn,
 		parlabel,
 		output,
-	))
+	)
 
-	myWindow.ShowAndRun()
 }
