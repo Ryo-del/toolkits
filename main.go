@@ -7,6 +7,7 @@ import (
 	monitor "github.com/ryo-del/devops-toolkit/ui/layout/monitoring"
 	parser "github.com/ryo-del/devops-toolkit/ui/layout/parsering"
 	port "github.com/ryo-del/devops-toolkit/ui/layout/portscanner"
+	settings "github.com/ryo-del/devops-toolkit/ui/layout/settings"
 )
 
 func main() {
@@ -17,6 +18,7 @@ func main() {
 		container.NewTabItem("📊 Мониторинг", monitor.NewMonitorTab()),
 		container.NewTabItem("📁 Парсер логов", parser.NewParserTab()),
 		container.NewTabItem("Порт сканер", port.NewParserTab()),
+		container.NewTabItem("Настройки", settings.NewSettingsTab()),
 	)
 
 	w.SetContent(tabs)

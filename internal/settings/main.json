@@ -1,0 +1,25 @@
+{
+  "scaner": {
+    "protocol": "tcp",
+    "ports": [
+      22,
+      80,
+      443,
+      8080,
+      8181
+    ],
+    "ip": "127.0.0.1",
+    "Work": 4,
+    "time": 500
+  },
+  "parser": {
+    "log_path": "",
+    "format": "",
+    "save_to": ""
+  },
+  "monitor": {
+    "cpu": false,
+    "memory": false,
+    "interval": 0
+  }
+}
