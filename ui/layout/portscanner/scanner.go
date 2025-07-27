@@ -12,7 +12,7 @@ import (
 	"github.com/ryo-del/devops-toolkit/internal/portscanner"
 )
 
-func NewParserTab() fyne.CanvasObject {
+func NewScannerTab() fyne.CanvasObject {
 	infolabel := widget.NewLabel("Scanning ports on 127.0.0.1")
 	output := widget.NewLabel("Results will appear here")
 

@@ -1,8 +1,9 @@
 package monitor
 
 import (
+	"encoding/json"
 	"fmt"
-	//"encoding/json"
+	"os"
 	"time"
 
 	"github.com/shirou/gopsutil/v3/cpu"
@@ -12,8 +13,35 @@ import (
 	"github.com/shirou/gopsutil/v3/net"
 )
 
+type Config struct {
+	Monitor MonitorConfig `json:"monitor"`
+}
+type MonitorConfig struct {
+	CPU      bool `json:"cpu"`      //config.CPU
+	Interval int  `json:"interval"` // в секундах, например
+}
+
+var config MonitorConfig
+
+func init() {
+	//json
+	file, err := os.Open("internal/settings/main.json")
+	if err != nil {
+		panic(err) // если не нашли конфиг — останавливаем программу
+	}
+	defer file.Close()
+
+	var cfg Config
+	decoder := json.NewDecoder(file)
+	if err := decoder.Decode(&cfg); err != nil {
+		panic(err) // если не удалось прочитать JSON
+	}
+
+	config = cfg.Monitor
+}
+
 func GetCPUUsage() (string, error) {
-	percent, err := cpu.Percent(time.Second, false)
+	percent, err := cpu.Percent(time.Duration(config.Interval)*time.Second, config.CPU)
 	if err != nil || len(percent) == 0 {
 		return "", err
 	}
@@ -41,7 +69,12 @@ func GetNetworkIO() (string, error) {
 	if err != nil || len(netIO) == 0 {
 		return "", err
 	}
-	return fmt.Sprintf("Network IO: %d bytes sent, %d bytes received", netIO[0].BytesSent, netIO[0].BytesRecv), nil
+
+	// Переводим байты в мегабайты
+	mbSent := float64(netIO[0].BytesSent) / (1024 * 1024)
+	mbRecv := float64(netIO[0].BytesRecv) / (1024 * 1024)
+
+	return fmt.Sprintf("Network IO: %.2f MB sent, %.2f MB received", mbSent, mbRecv), nil
 }
 
 func GetHostInfo() (string, error) {

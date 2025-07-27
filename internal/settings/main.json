@@ -19,7 +19,11 @@
   },
   "monitor": {
     "cpu": false,
-    "memory": false,
-    "interval": 0
+    "interval": 1
+  },
+  "ping": {
+    "packages": 1,
+    "interval": 1,
+    "source": "google.com"
   }
 }

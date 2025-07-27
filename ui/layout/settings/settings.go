@@ -14,8 +14,13 @@ type Config struct {
 	Scaner  ScanerConfig  `json:"scaner"`
 	Parser  ParserConfig  `json:"parser"`
 	Monitor MonitorConfig `json:"monitor"`
+	Ping    PingConfig    `json:"ping"`
 }
-
+type PingConfig struct {
+	Packages int    `json:"packages"`
+	Interval int    `json:"interval"`
+	Source   string `json:"source"`
+}
 type ScanerConfig struct {
 	Protocol string `json:"protocol"`
 	Ports    []int  `json:"ports"`
@@ -32,7 +37,6 @@ type ParserConfig struct {
 
 type MonitorConfig struct {
 	CPU      bool `json:"cpu"`
-	Memory   bool `json:"memory"`
 	Interval int  `json:"interval"` // в секундах, например
 }
 
